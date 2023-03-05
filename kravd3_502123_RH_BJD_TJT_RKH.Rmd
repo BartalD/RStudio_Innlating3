@@ -206,13 +206,15 @@ tmp2 <- mutate(
 > 3a) les givnu fíluna `ferdslu_ohapp.csv` inn í tibble `ferdslu_ohapp` við einføldum brúki av `read_csv()`-funktiónini uttan nakrar parametrar (tip: tú fært eina `25 x 1` tibble).
 
 ```{r}
-
+ferdslu_ohapp <- read_csv("ferdslu_ohapp.csv")
+ferdslu_ohapp
 ```
 
 > 3b) les umaftur givnu fíluna `ferdslu_ohapp.csv` inn í tibble `ferdslu_ohapp` við `read_csv()`-funktiónini, men nú við brúk av parametrum. Soleiðis, at data verða innlisin uttan fyrstu linju av metadata, og har tómu virðini merkt við `..` vera sett til `NA` virði. Útles síðani `ferdslu_ohapp` umaftur (tip: tú fært eina `24 x 21` tibble).
 
 ```{r}
-
+ferdslu_ohapp <- read_csv("ferdslu_ohapp.csv", skip = 1, na = "..")
+ferdslu_ohapp
 ```
 
 > 3c) snøgga tibble `ferdslu_ohapp` í fylgjandi trinum:
@@ -220,13 +222,15 @@ tmp2 <- mutate(
 > 3c1) broyt øll virðini í `ferdslu_ohapp` merkt sum '-' til '0' og les hana útaftur (tip: hetta kann lættast gerast við eini pipe av `ferdslu_ohapp` inn í `mutate(across())`, har tit lata `across()` kalla eina `str_replace` funktión).
 
 ```{r}
-
+ferdslu_ohapp <- ferdslu_ohapp %>%
+  mutate(across(everything(), ~ str_replace(., "-", "0")))
+ferdslu_ohapp
 ```
 
 > 3c2) samla øll árini í `ferdslu_ohapp` í ein nýggjan variabul `ár` og virðini í ein nýggjan variabul `n`, og útles `ferdslu_ohapp` (tip: tú fært eina `432 x 5` tibble. Um títt `n` ikki er numeriskt, broyt so `n` til integer og útles `ferdslu_ohapp` umaftur, áðrenn tú fert víðari).
 
 ```{r}
-
+ár <- ferdslu_ohapp$
 ```
 
 > 3c3) deil variabul `slag` í tveir nýggjar variablar við heitum frá `slag` og virðum frá `n`, og útles `ferdslu_ohapp` umaftur (tip: tú fært eina `216 x 5` tibble).
