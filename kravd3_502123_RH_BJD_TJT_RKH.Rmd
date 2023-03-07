@@ -63,7 +63,8 @@ sama_fdag
 ```{r}
 sama_fdag <- mutate(
   sama_fdag,
-  fdag = map(n_lesandi, ~ sample(365, ., replace = TRUE))) |>
+  fdag = map(n_lesandi, ~ sample(365, ., replace = TRUE))
+  ) |>
   unnest(fdag)
 sama_fdag
 ```
