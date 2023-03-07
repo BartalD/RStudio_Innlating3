@@ -231,24 +231,41 @@ ferdslu_ohapp
 > 3c2) samla øll árini í `ferdslu_ohapp` í ein nýggjan variabul `ár` og virðini í ein nýggjan variabul `n`, og útles `ferdslu_ohapp` (tip: tú fært eina `432 x 5` tibble. Um títt `n` ikki er numeriskt, broyt so `n` til integer og útles `ferdslu_ohapp` umaftur, áðrenn tú fert víðari).
 
 ```{r}
-ár <- ferdslu_ohapp$
+ferdslu_ohapp <- pivot_longer(ferdslu_ohapp, cols = '1995':'2012',
+                   names_to = "ár", values_to = "n", values_transform = list(n = as.integer))
+
+ferdslu_ohapp
+
+#ferdslu_ohapp$n <- as.integer(ferdslu_ohapp$n)
+
 ```
 
 > 3c3) deil variabul `slag` í tveir nýggjar variablar við heitum frá `slag` og virðum frá `n`, og útles `ferdslu_ohapp` umaftur (tip: tú fært eina `216 x 5` tibble).
 
 ```{r}
 
+ferdslu_ohapp <- pivot_wider(ferdslu_ohapp, names_from = slag, values_from = n)
+
+
+ferdslu_ohapp
 ```
 
 > 3d) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `Ferðsluóhapp tilsamans` sum x-aksa, `ár` sum y-aksa og `stað` sum facet-variabul. Greið frá hvat tit leggja merki til í hesum plotti. Viðmerk eisini útfrá plottinum hvussu nógvir outliers eru. Eftirkanna síðani við einføldum pipe-setningi hvussu nógv virði eru `> 150` og hvar tey koma frá (hvørji sýslu).
 
 ```{r}
 
+ggplot(ferdslu_ohapp) +
+  geom_boxplot(aes(x = `Ferðsluóhapp tilsamans`, y = ár), na.rm = TRUE) +
+  facet_wrap(~stað)
+
 ```
 
 ```{r}
-
+df <- ferdslu_ohapp %>%
+  filter(`Ferðsluóhapp tilsamans` > 150) 
+df
 ```
+
 
 
 > 3e) her gera vit tvey ymisk plot.
@@ -256,6 +273,7 @@ ferdslu_ohapp
 > 3e1) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `stað` sum x-aksa, `Ferðsluóhapp tilsamans` sum y-aksa. 
 
 ```{r}
+
 
 ```
 
