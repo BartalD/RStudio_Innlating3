@@ -61,17 +61,17 @@ sama_fdag
 > 1b) legg variabul `fdag` afturat `sama_fdag` við brúk av `mutate()` og eini eini `map()`-funktión. Soleiðis, at tú fyri hvørt virði av `n_lesandi` ásetur (simulerar) tilvildarligar føðingardagar fyri tey lesandi við brúk av `sample(365, ., replace = TRUE)`. Útles síðani tibble `sama_fdag` umaftur (tip: hon skal vera ein `18 x 3` tibble).
 
 ```{r}
-tmp2 <- mutate(
+sama_fdag <- mutate(
   sama_fdag,
-  fdag = sama_fdag$n_lesandi %>% 
-    map(sample(365, 1, replace = TRUE))
-)
+  fdag = map(n_lesandi, ~ sample(365, ., replace = TRUE))) |>
+  unnest(fdag)
+sama_fdag
 ```
 
 > 1c)  hvør datatypa er variabul `fdag`? í tibble `sama_fdag`? Útles variabul `fdag` soleiðis, at bæði datatypa og innihald sæst.
 
 ```{r}
-
+str(sama_fdag$fdag)
 ```
 
 > 1d) legg variabul `nakar_sdag` afturat `sama_fdag` við brúk av `mutate()`, og eini eini logiskari `map()`-funktión. Soleiðis, at tú fyri hvønn simuleraðan `fdag` eftirkannar (`TRUE` ella `FALSE`) um nøkur lesandi hava sama føðingardag. Útles síðani tibble `sama_fdag` umaftur (tip: hon skal vera ein `18 x 4` tibble).
