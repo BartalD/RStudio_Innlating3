@@ -64,14 +64,14 @@ sama_fdag
 sama_fdag <- mutate(
   sama_fdag,
   fdag = map(n_lesandi, ~ sample(365, ., replace = TRUE))
-  ) |>
-  unnest(fdag)
+  )
 sama_fdag
 ```
 
 > 1c)  hvør datatypa er variabul `fdag`? í tibble `sama_fdag`? Útles variabul `fdag` soleiðis, at bæði datatypa og innihald sæst.
 
 ```{r}
+# Ein listi av integers
 str(sama_fdag$fdag)
 ```
 
