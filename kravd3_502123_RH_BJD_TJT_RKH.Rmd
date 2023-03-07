@@ -79,6 +79,10 @@ str(sama_fdag$fdag)
 
 ```{r}
 
+
+sama_fdag <- mutate(sama_fdag, nakar_sdag = map_lgl(fdag, ~ any(duplicated(.x))))
+sama_fdag
+
 ```
 
 > 1e) ger eina nýggja tibble `p_samadag`, har tú við eini pipe av `sama_fdag` bólkað uppá `n_lesandi` útroknar simuleraðu sannlíkindini `p_sdag` fyri at nakar lesandi hevur sama føðingardag. Útles síðani tibble `p_samadag` (tip: tí vit enn ikki hava økt um talið av lesandi, so skal `p_samadag` bert vera ein `9 x 2` tibble har flestu, ella øll, sannlíkindini eru 0).
