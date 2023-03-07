@@ -278,6 +278,8 @@ df
 
 ```{r}
 
+ggplot(data = ferdslu_ohapp) +
+  geom_boxplot(aes(x = stað, y = `Ferðsluóhapp tilsamans`), na.rm = TRUE)
 
 ```
 
@@ -285,12 +287,24 @@ df
 
 ```{r}
 
+ggplot(data = ferdslu_ohapp) +
+  geom_boxplot(aes(x = stað, y = `Ferðsluóhapp tilsamans`), na.rm = TRUE) +
+  facet_wrap(~sýsla, scales = "free_y")
+  
+  
+
 ```
 
 > 3f) ger eitt `geom_bar()` plot av `ferdslu_ohapp` við `ár` sum x-aksa, `Ferðsluóhapp tilsamans` sum y-aksa, har tú brúkar `alpha = 0.25`. Hetta vísir samlaða talið av óhappum fyri hvørt árið. Í sama plotti, ger eitt `geom_point()` plot av `ferdslu_ohapp` við `ár` sum x-aksa, `Ferðsluóhapp tilsamans` sum y-aksa, har tú mappar lit av punktum til variabul `stað` og brúkar `sýsla` sum facet-variabul við `scales = "free_y"`. Greið frá hvat tit leggja merki til í hesum plotti. 
 
 
 ```{r}
+
+ggplot(ferdslu_ohapp) +
+  geom_bar(aes(x = ár, y = `Ferðsluóhapp tilsamans`), alpha = 0.25, stat = "Identity", na.rm = TRUE) +
+  geom_point(aes(x = ár, y = `Ferðsluóhapp tilsamans`, colour = stað), na.rm = TRUE) +
+  facet_wrap(~sýsla, scales = "free_y") +
+  theme(axis.text.x = element_text(angle = 90))
 
 ```
 
