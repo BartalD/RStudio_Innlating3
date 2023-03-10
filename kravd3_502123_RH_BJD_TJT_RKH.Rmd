@@ -351,8 +351,6 @@ ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk` / `Ferðsluóhapp tilsa
     "MANGLAR AT SVARA"
 
 ```{r}
-ferdslu_ohapp
-
 ggplot(ferdslu_ohapp) +
   geom_boxplot(aes(x = `Skadd fólk`/`Ferðsluóhapp tilsamans`, y = `stað`), color = "red", na.rm = TRUE) +
   geom_violin(aes(x = `Skadd fólk`/`Ferðsluóhapp tilsamans`, y = `stað`), alpha = 0.25, na.rm = TRUE) +
@@ -363,7 +361,17 @@ ggplot(ferdslu_ohapp) +
 > 4f) ger eina pipe av `ferdslu_ohapp` har tú ikki tekur árið `2009` við, síðani bólkar uppá `stað`, telur antal datapunkt `n` og roknar tal av óhappum `n_ohapp`, tal av skaddum `n_skadd` og roknar sannlíkindini `p_skadd` fyri fólkaskaða. Goym úrslitið í `ophapp_yvirlit` og les hana út (tip: tú fært eina `2 x 5` tibble).
 
 ```{r}
+ophapp_yvirlit <- ferdslu_ohapp %>% 
+  filter(`ár` != "2009") %>%
+  group_by(`stað`) %>%
+  summarise(
+    n = n(),
+    n_ohapp = sum(`Ferðsluóhapp tilsamans`),
+    n_skadd = sum(`Skadd fólk`),
+    p_skadd = n_skadd / n_ohapp
+  )
 
+ophapp_yvirlit
 ```
 
 
