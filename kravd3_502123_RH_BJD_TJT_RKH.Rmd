@@ -340,7 +340,9 @@ ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk`)) +
 
 
 ```{r}
-
+ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk` / `Ferðsluóhapp tilsamans`)) +
+  geom_boxplot(na.rm = TRUE) +
+  facet_wrap(~ `sýsla`, scales = "free_y")
 ```
 
 > 4e) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `stað` sum y-aksa uttan at brúka nakran facet-variabul. Í sama plotti, legg eitt tilsvarandi `geom_violin()` plot, har tú brúkar `alpha = 0.25`. Í sama plotti, legg harumframt eitt eyka `geom_boxplot()` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `Í Føroyum` sum y-aksa, og eitt tilsvarandi `geom_violin()` plot, har tú aftur brúkar `alpha = 0.25`. Greið frá hvat tú leggur merki til í hesum plotti (tip: samanber tey trý box- og violinplottini). 
