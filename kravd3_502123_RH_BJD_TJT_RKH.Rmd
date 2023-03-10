@@ -331,7 +331,9 @@ ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk`)) +
 > 4c) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `stað` sum x-aksa, `Skadd fólk` sum y-aksa og `sýsla` sum facet-variabul við `scales = "free_y"`.
 
 ```{r}
-
+ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk`)) +
+  geom_boxplot(na.rm = TRUE) +
+  facet_wrap(~ `sýsla`, scales = "free_y")
 ```
 
 > 4d) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `stað` sum x-aksa, lutfallið `Skadd fólk`/`Ferðsluóhapp tilsamans` sum y-aksa og `sýsla` sum facet-variabul við `scales = "free_y"`. Greið frá hvat tit leggja merki til í hesum plotti.
