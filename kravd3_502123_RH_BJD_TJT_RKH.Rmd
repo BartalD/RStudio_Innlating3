@@ -346,11 +346,18 @@ ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk` / `Ferðsluóhapp tilsa
   facet_wrap(~ `sýsla`, scales = "free_y")
 ```
 
-> 4e) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `stað` sum y-aksa uttan at brúka nakran facet-variabul. Í sama plotti, legg eitt tilsvarandi `geom_violin()` plot, har tú brúkar `alpha = 0.25`. Í sama plotti, legg harumframt eitt eyka `geom_boxplot()` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `Í Føroyum` sum y-aksa, og eitt tilsvarandi `geom_violin()` plot, har tú aftur brúkar `alpha = 0.25`. Greið frá hvat tú leggur merki til í hesum plotti (tip: samanber tey trý box- og violinplottini). 
+> 4e) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `stað` sum y-aksa uttan at brúka nakran facet-variabul. Í sama plotti, legg eitt tilsvarandi `geom_violin()` plot, har tú brúkar `alpha = 0.25`. Í sama plotti, legg harumframt eitt eyka `geom_boxplot()` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `Í Føroyum` sum y-aksa, og eitt tilsvarandi `geom_violin()` plot, har tú aftur brúkar `alpha = 0.25`. Greið frá hvat tú leggur merki til í hesum plotti (tip: samanber tey trý box- og violinplottini).
 
+    "MANGLAR AT SVARA"
 
 ```{r}
+ferdslu_ohapp
 
+ggplot(ferdslu_ohapp) +
+  geom_boxplot(aes(x = `Skadd fólk`/`Ferðsluóhapp tilsamans`, y = `stað`), color = "red", na.rm = TRUE) +
+  geom_violin(aes(x = `Skadd fólk`/`Ferðsluóhapp tilsamans`, y = `stað`), alpha = 0.25, na.rm = TRUE) +
+  geom_boxplot(aes(x = `Skadd fólk` / `Ferðsluóhapp tilsamans`, y = `sýsla`), color = "blue", na.rm = TRUE) +
+  geom_violin(aes(x = `Skadd fólk` / `Ferðsluóhapp tilsamans`, y = `sýsla`), alpha = 0.25, na.rm = TRUE)
 ```
 
 > 4f) ger eina pipe av `ferdslu_ohapp` har tú ikki tekur árið `2009` við, síðani bólkar uppá `stað`, telur antal datapunkt `n` og roknar tal av óhappum `n_ohapp`, tal av skaddum `n_skadd` og roknar sannlíkindini `p_skadd` fyri fólkaskaða. Goym úrslitið í `ophapp_yvirlit` og les hana út (tip: tú fært eina `2 x 5` tibble).
