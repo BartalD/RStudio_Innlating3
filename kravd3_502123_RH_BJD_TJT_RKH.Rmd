@@ -315,6 +315,9 @@ ggplot(ferdslu_ohapp) +
 > 4a)  plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `Skadd fólk` sum x-aksa, `ár` sum y-aksa og `stað` sum facet-variabul.
 
 ```{r}
+ggplot(ferdslu_ohapp, aes(x = `Skadd fólk`, y = `ár`)) +
+  geom_boxplot(na.rm = TRUE) +
+  facet_wrap(~ `stað`)
 
 ```
 
