@@ -1,8 +1,12 @@
 ---
 title: "Kravd innlating 3"
 author: "Skriva fult navn/nøvn á lesandi her."
-date: "Innlating í Moodle: seinast um kvøldið 14. mars 2023. Endurbrúka eisini fílnavnið á hesum template-skjalinum, sum tit lata inn, har tit seta tykkara forbókstavir inn fyri NN1_NN2_NN3_NN4."
-output: html_notebook
+date: "Innlating í Moodle: seinast um kvøldið 14. mars 2023. Endurbrúka eisini fílnavnið
+  á hesum template-skjalinum, sum tit lata inn, har tit seta tykkara forbókstavir
+  inn fyri NN1_NN2_NN3_NN4."
+output:
+  html_document:
+    df_print: paged
 ---
 
 ## Dátuvísindi og hagfrøði við RStudio
@@ -102,28 +106,75 @@ p_samadag
 
 ```{r}
 
+p_samadag <-
+  crossing(n_lesandi = 2:10, roynd_nr = 1:2) %>%
+  mutate(.,
+  fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
+  ) %>%
+  mutate(., nakar_sdag = map_lgl(fdag, ~any(duplicated(.x)))) %>%
+  group_by(n_lesandi) %>%
+  summarize(p_sdag = mean(nakar_sdag))
+  
+p_samadag
 ```
 
 > 1f2) set nú talið `n_lesandi` upp til `2:50`, og eftirkanna um tú enn fært sama/líknandi úrslit sum í 1e fyri fyrstu 9 rekkjurnar, og hvat tú nú fært afturat í teimum eyka rekkjunum? Greið frá hvat tú eygleiðir (tip: her skalt tú fáa eina `49 x 2` tibble).
 
 ```{r}
 
+n_lesandi <- 2:50
+
+p_samadag <-
+  crossing(n_lesandi, roynd_nr) %>%
+  mutate(.,
+  fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
+  ) %>%
+  mutate(., nakar_sdag = map_lgl(fdag, ~any(duplicated(.x)))) %>%
+  group_by(n_lesandi) %>%
+  summarize(p_sdag = mean(nakar_sdag))
+  
+p_samadag
+
 ```
+    Her sær man eina korrelation ímillum n_lesandi og sannlíkindi at tvey ella fleiri hava sama føðingardag. Størri n_lesandi, størri er kjansurin at tvey fylla sama dag.
 
 > 1f3) her skal talið `n_lesandi` framvegis vera `2:50`, og set nú talið `roynd_nr` upp til `1:5000`. Eftirkanna aftur, um tú enn fært sama/líknandi úrslit sum í 1e fyri fyrstu 9 rekkjurnar, og hvat tú nú fært í hinum rekkjunum? Greið frá hvat tú eygleiðir (tip: her skalt tú framvegis fáa eina `49 x 2` tibble).
 
 ```{r}
-
+roynd_nr <- 1:5000
+p_samadag <-
+  crossing(n_lesandi, roynd_nr) %>%
+  mutate(.,
+  fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
+  ) %>%
+  mutate(., nakar_sdag = map_lgl(fdag, ~any(duplicated(.x)))) %>%
+  group_by(n_lesandi) %>%
+  summarize(p_sdag = mean(nakar_sdag))
+  
+p_samadag
 ```
+    Hetta líkjist sum so ikki hitt dataði, tí her eru ikki bert 0, 0.5 ella 1. Hetta kemst av hægri sampling, also er hetta ikki í mótstríð við hitt. Um ein hyggur víðari at datanum, so vil ein eisini síggja at bæði eru hækkandi.
 
 > 1f4) plotta eitt punkt- og linjuplot av `p_samadag` frá spurningi 1f3, har tú mappar `x = n_lesandi` og `y = p_sdag`. Brúka til dømis tilhoyrandi aksa-tekstirnar: "Antal lesandi" og "Sannlíkindini fyri sama føðingardag". Hvussu stóran flokk av lesandi skalt tú hava fyri at sannlíkindini fyri at nakar í flokkinum hevur sama føðingardag er ávikavist 0.5, 0.7 og 0.9?
 
 ```{r}
-
+ggplot(p_samadag, aes(x = n_lesandi, y = p_sdag)) +
+  geom_point() +
+  geom_line() +
+  xlab("Antal lesandi") +
+  ylab("Sannlíkindi fyri sama føðingardag") +
+  geom_hline(yintercept = 0.5) +
+  geom_hline(yintercept = 0.7) +
+  geom_hline(yintercept = 0.9)
 ```
-
-
-
+    
+    Um ein bert hyggur eftir plottinum, so skal tað vera ~22 ella 23 fyri 50%, ~30 fyri 70% og ~41 fyri 90%.
+    Við hesum frymlinum, kunnu vit rokna og fáa neyvari tøl [https://en.wikipedia.org/wiki/Birthday_problem]:
+    Við at seta n = 365 og k = 23 fáa vit: ~50.7%
+    k = 30: 70.6%
+    k = 41: 90.3%
+    Frymil frá: en.wikipedia.org/wiki/Birthday_problem
+    Hetta passar nokso væl við observaringarnar frá grafikinum omanfyri.
 
 ### Uppg. 2
 
