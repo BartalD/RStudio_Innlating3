@@ -89,7 +89,11 @@ sama_fdag
 
 
 ```{r}
+p_samadag <- sama_fdag %>%
+  group_by(n_lesandi) %>%
+  summarise(p_sdag = mean(nakar_sdag))
 
+p_samadag
 ```
 
 > 1f)
