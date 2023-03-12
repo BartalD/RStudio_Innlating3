@@ -250,7 +250,7 @@ p_maxsdag <- crossing(n_lesandi, roynd_nr) %>%
     fdag = map(n_lesandi, ~sample(365, ., replace = TRUE)),
     `>= 2` = map_int(fdag, ~any(duplicated(.x))),
     #max_sdag = max(table(fdag)),
-    max_sdag = 2,
+    max_sdag = map_int(fdag, function(x) max(table(x))),
     #max_sdag = as.numeric(tail(sort(table(fdag)), 1)),
     `== 2` = max_sdag == 2,
     `== 3` = max_sdag == 3,
