@@ -211,7 +211,9 @@ ggplot(p_samadag, aes(x = n_lesandi, y = p_sdag)) +
   geom_point() +
   geom_hline(yintercept = qbirthday(prob = 0.5, classes = 365, coincident = 2) / 100) +
   geom_hline(yintercept = qbirthday(prob = 0.7, classes = 365, coincident = 2) / 100) +
-  geom_hline(yintercept = qbirthday(prob = 0.9, classes = 365, coincident = 2) / 100)
+  geom_hline(yintercept = qbirthday(prob = 0.9, classes = 365, coincident = 2) / 100) +
+  xlab("Antal lesandi") +
+  ylab("Sannlíkindi fyri sama føðingardag")
 
 ```
 
@@ -241,7 +243,22 @@ n_lesandi_80
 n_lesandi = seq(5, 700, 5)
 roynd_nr = 1:100
 
+p_maxsdag <- NULL
 
+p_maxsdag <- crossing(n_lesandi, roynd_nr) %>%
+  mutate(
+    fdag = map(n_lesandi, ~sample(365, ., replace = TRUE)),
+    `>= 2` = map_int(fdag, ~any(duplicated(.x))),
+    #max_sdag = max(table(fdag)),
+    max_sdag = 2,
+    #max_sdag = as.numeric(tail(sort(table(fdag)), 1)),
+    `== 2` = max_sdag == 2,
+    `== 3` = max_sdag == 3,
+    `== 4` = max_sdag == 4,
+    `== 5` = max_sdag == 5,
+  )
+
+p_maxsdag
 ```
 
 > 2e2) vit byggja víðari uppá pipe-setningin við `pivot_longer()` og samla allar logisku variablarnar `>= 2`, `== 2`, `== 3`, `== 4`, `== 5` í eina kolonnu vit nevna `max` og virðini í eina kolonnu vit nevna `sdag`. Útles `p_maxsdag`, tá hetta er gjørt (tip: við `n_lesandi = seq(5, 700, 5)` og `roynd_nr = 1:100` gevur hetta eina tibble á `70000 x 6` við `70000` rekkjum og `6` variablum: `n_lesandi, roynd_nr, fdag, max_sdag, max, sdag`).
