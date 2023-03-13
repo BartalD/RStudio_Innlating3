@@ -519,8 +519,46 @@ landsvegi_ar
 
 > 5e) antak at á landsvegi í Føroyum eru fólkaskaðatilburðir í hvørjari sýslu binomialfordeildir við somu sannlíkindum sum fyri alt landið (`p_skadd = 626/5285`), og plotta tær seks binomialfordeilingarnar svarandi til tey seks `n_ohapp` virðini í `landsvegi_ar`. Greið frá hvat tú leggur merki til í hesum sannlíkinda-plottum (tip: brúka  til dømis ein for-loop og eitt facet-plot, eins og vit áður hava gjørt í undirvísingini, og lat `x = seq(0, 25, 1)`).
 
-```{r}
+  "MANGLAR AT SVARA"
 
+```{r}
+n_ohapp <- landsvegi_ar$n_ohapp
+p <- 626/5285 # p_skadd
+
+ndata <- NULL
+tdata <- NULL
+for (n in n_ohapp) {
+  size = n
+  mu <- n*p
+  sd <- sqrt(n*p*(1-p))
+  
+  tb_data <- NULL
+  tb_data <- tibble(x = seq(0, 25, 0.01),
+                    y = dnorm(x, mu, sd),
+                    n_ohapp = n)
+  ndata <- rbind(ndata, tb_data)
+  
+  tb_bino <- tibble(
+  x = seq(0, 25, 1),
+  y = dbinom(x, n, p),
+  n_ohapp = n
+  )
+  tdata <- rbind(tdata, tb_bino)
+}
+
+ggplot(ndata, aes(x,y)) +
+  geom_area(data=filter(ndata,
+                        x <= 10),
+            fill = "lightblue") +
+  geom_area(data=filter(ndata,
+                        x >= 20),
+            aes(x = x, y = y),
+            fill = "lightblue") +
+  scale_x_continuous(breaks = seq(0, 25, 5)) +
+  scale_y_continuous(breaks = seq(0, 0.4, 0.1)) +
+  geom_line() +
+  geom_point(data=tdata, aes(x, y)) +
+  facet_wrap(~ n_ohapp)
 ```
 
 > 5f) 
