@@ -79,6 +79,8 @@ sama_fdag
 str(sama_fdag$fdag)
 ```
 
+    'fdag' er ein listi av virðum við datatypuni 'integer'.
+
 > 1d) legg variabul `nakar_sdag` afturat `sama_fdag` við brúk av `mutate()`, og eini eini logiskari `map()`-funktión. Soleiðis, at tú fyri hvønn simuleraðan `fdag` eftirkannar (`TRUE` ella `FALSE`) um nøkur lesandi hava sama føðingardag. Útles síðani tibble `sama_fdag` umaftur (tip: hon skal vera ein `18 x 4` tibble).
 
 ```{r}
@@ -117,6 +119,8 @@ p_samadag <-
   
 p_samadag
 ```
+
+    Vit fáa líknandi úrslit sum í 1e. Av tí at data verður genererað av nýggjum, so kann tað vera at hon hevur onnur úrslit.
 
 > 1f2) set nú talið `n_lesandi` upp til `2:50`, og eftirkanna um tú enn fært sama/líknandi úrslit sum í 1e fyri fyrstu 9 rekkjurnar, og hvat tú nú fært afturat í teimum eyka rekkjunum? Greið frá hvat tú eygleiðir (tip: her skalt tú fáa eina `49 x 2` tibble).
 
@@ -163,12 +167,12 @@ ggplot(p_samadag, aes(x = n_lesandi, y = p_sdag)) +
   geom_line() +
   xlab("Antal lesandi") +
   ylab("Sannlíkindi fyri sama føðingardag") +
-  geom_hline(yintercept = 0.5) +
-  geom_hline(yintercept = 0.7) +
-  geom_hline(yintercept = 0.9)
+  geom_hline(yintercept = 0.5, linetype = "dashed") +
+  geom_hline(yintercept = 0.7, linetype = "dashed") +
+  geom_hline(yintercept = 0.9, linetype = "dashed")
 ```
     
-    Um ein bert hyggur eftir plottinum, so skal tað vera ~22 ella 23 fyri 50%, ~30 fyri 70% og ~41 fyri 90%.
+    Um ein bert hyggur eftir plottinum, so skal tað vera ~23 fyri 50%, ~30 fyri 70% og ~41 fyri 90%.
     Við hesum frymlinum, kunnu vit rokna og fáa neyvari tøl [https://en.wikipedia.org/wiki/Birthday_problem]:
     Við at seta n = 365 og k = 23 fáa vit: ~50.7%
     k = 30: 70.6%
@@ -209,25 +213,32 @@ p_samadag
 ```{r}
 ggplot(p_samadag, aes(x = n_lesandi, y = p_sdag)) +
   geom_point() +
-  geom_hline(yintercept = qbirthday(prob = 0.5, classes = 365, coincident = 2) / 100) +
-  geom_hline(yintercept = qbirthday(prob = 0.7, classes = 365, coincident = 2) / 100) +
-  geom_hline(yintercept = qbirthday(prob = 0.9, classes = 365, coincident = 2) / 100) +
+  geom_vline(xintercept = qbirthday(prob = 0.5, classes = 365, coincident = 2), linetype = "dashed") +
+  geom_vline(xintercept = qbirthday(prob = 0.7, classes = 365, coincident = 2), linetype = "dashed") +
+  geom_vline(xintercept = qbirthday(prob = 0.9, classes = 365, coincident = 2), linetype = "dashed") +
   xlab("Antal lesandi") +
   ylab("Sannlíkindi fyri sama føðingardag")
 
 ```
 
 ```{r}
-
+qbirthday(prob = 0.5, classes = 365, coincident = 2)
+qbirthday(prob = 0.7, classes = 365, coincident = 2)
+qbirthday(prob = 0.9, classes = 365, coincident = 2)
 ```
+
+    50%: 23
+    70%: 30
+    90%: 41 
+
 
 > 2d)  hvørji eru sannlíkindini útroknaði við `pbirthday()` fyri at minst tvey hava sama føðingardag, tá `n_lesandi = 50`, og tá `n_lesandi = 80`?
 
 ```{r}
-n_lesandi_50 = pbirthday(50, classes = 365, coincident = 2)
+n_lesandi_50 <- pbirthday(50, classes = 365, coincident = 2)
 n_lesandi_50
 
-n_lesandi_80 = pbirthday(80, classes = 365, coincident = 2)
+n_lesandi_80 <- pbirthday(80, classes = 365, coincident = 2)
 n_lesandi_80
 ```
 
@@ -272,6 +283,11 @@ p_maxsdag
 
 ```{r}
 
+
+p_maxsdag <- p_maxsdag %>%
+  group_by(n_lesandi, max) %>%
+  summarize(p_sdag = mean(sdag))
+p_maxsdag
 ```
 
 > 2e4) plotta eitt punkt- og linjuplot av `p_maxsdag` frá spurningi 2e3, har tú mappar `x = n_lesandi` og `y = p_sdag`, og har tú hesuferð mappar lit til `max` so tú fært ein legend. 
@@ -365,13 +381,15 @@ ggplot(ferdslu_ohapp) +
 
 ```
 
+    Vit síggja at kommunalvegirnir hvørt ár hava ein stóran outlier, sum støðugt er minkandi frá árinum 1999. Vit hugsa at hetta má vera Streymoyar sýsla, av tí at hon hevur meira ferðslu enn hinar sýslunar. Og við at hyggja í datasettið hjá okkum, má hetta eisini sigast at vera satt. Vit síggja eisini at støddinar á boksinum eru skiftandi hvørt ár. Hetta sigur okkum at talið á ferðsluóhappum er skiftandi ár um ár.
+
 ```{r}
 df <- ferdslu_ohapp %>%
   filter(`Ferðsluóhapp tilsamans` > 150) 
 df
 ```
 
-
+    Vit síggja at tað einans er Streymoyar sýsla ið hevur meira enn 150 ferðsluóhapp. Og hetta stuðlar eisini okkara útsøgn um at Streymoyggin eigur stórsta partin av ferðsluóhappunum. Vit síggja eisini at størsti meirilutin av óhappunum henda á kommunalvegi. Einans tvey ár hava havt meira enn 150 óhapp á landsvegi.
 
 > 3e) her gera vit tvey ymisk plot.
 
@@ -391,8 +409,6 @@ ggplot(data = ferdslu_ohapp) +
 ggplot(data = ferdslu_ohapp) +
   geom_boxplot(aes(x = stað, y = `Ferðsluóhapp tilsamans`), na.rm = TRUE) +
   facet_wrap(~sýsla, scales = "free_y")
-  
-  
 
 ```
 
