@@ -506,7 +506,15 @@ prop.test(x = 10, n = `stað_2`$n, p = `stað_2`$p_skadd)
 > 5d) ger eina pipe av `ferdslu_ohapp` har tú bert tekur ár `1998` og stað `Á landsvegi` við, síðani bólkar uppá `stað, ár, sýsla` (so hesi lesast út), roknar tal av óhappum `n_ohapp` og tal av skaddum `n_skadd`. Goym úrslitið í `landsvegi_ar` og les hana út (tip: tú fært eina `6 x 5` tibble).
 
 ```{r}
+landsvegi_ar <- ferdslu_ohapp %>% 
+  filter(`ár` == 1998, `stað` == "Á landsvegi") %>%
+  group_by(stað, ár, sýsla) %>%
+  summarise(
+    n_ohapp = sum(`Ferðsluóhapp tilsamans`),
+    n_skadd = sum(`Skadd fólk`)
+  )
 
+landsvegi_ar
 ```
 
 > 5e) antak at á landsvegi í Føroyum eru fólkaskaðatilburðir í hvørjari sýslu binomialfordeildir við somu sannlíkindum sum fyri alt landið (`p_skadd = 626/5285`), og plotta tær seks binomialfordeilingarnar svarandi til tey seks `n_ohapp` virðini í `landsvegi_ar`. Greið frá hvat tú leggur merki til í hesum sannlíkinda-plottum (tip: brúka  til dømis ein for-loop og eitt facet-plot, eins og vit áður hava gjørt í undirvísingini, og lat `x = seq(0, 25, 1)`).
