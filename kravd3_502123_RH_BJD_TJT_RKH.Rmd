@@ -566,13 +566,25 @@ ggplot(ndata, aes(x,y)) +
 > 5f1) ger eina pipe av `ferdslu_ohapp` har tú ikki tekur árið `2009` við, síðani bólkar uppá `sýsla`, roknar tal av óhappum `n_ohapp`, tal av skaddum `n_skadd` og talið av ikki-skaddum `n_oskadd = n_ohapp - n_skadd`. Goym úrslitið í `sysla_yvirlit` og les hana út (tip: tú fært eina `6 x 4` tibble).
 
 ```{r}
-
+sysla_yvirlit <- ferdslu_ohapp %>%
+  filter(`ár` != 2009) %>%
+  group_by(`sýsla`) %>%
+  summarise(
+    n_ohapp = sum(`Ferðsluóhapp tilsamans`),
+    n_skadd = sum(`Skadd fólk`),
+    n_oskadd = n_ohapp - n_skadd 
+  )
+sysla_yvirlit
 ```
 
 > 5f2) vel bert variablar `n_skadd, n_oskadd` frá `sysla_yvirlit`. Goym úrslitið í tibble `skadd_oskadd`, og les hana út (tip: tú fært eina `6 x 2` tibble).
 
 ```{r}
+skadd_oskadd <- sysla_yvirlit %>%
+  group_by(n_skadd, n_oskadd) %>%
+  summarise()
 
+skadd_oskadd
 ```
 
 > 5f3) brúka `chisq.test()` at kanna null-hypotesuna um at sannlíkindini fyri fólkaskaða í ferðsluóhappum í Føroyum eru óheftir av `sýslu`. Hvørja niðurstøðu kemur testin fram til? 
