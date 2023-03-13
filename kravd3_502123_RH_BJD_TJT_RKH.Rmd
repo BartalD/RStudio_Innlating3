@@ -587,10 +587,12 @@ skadd_oskadd <- sysla_yvirlit %>%
 skadd_oskadd
 ```
 
-> 5f3) brúka `chisq.test()` at kanna null-hypotesuna um at sannlíkindini fyri fólkaskaða í ferðsluóhappum í Føroyum eru óheftir av `sýslu`. Hvørja niðurstøðu kemur testin fram til? 
+> 5f3) brúka `chisq.test()` at kanna null-hypotesuna um at sannlíkindini fyri fólkaskaða í ferðsluóhappum í Føroyum eru óheftir av `sýslu`. Hvørja niðurstøðu kemur testin fram til?
+
+    "MANGLAR AT SVARA"
 
 ```{r}
-
+chisq.test(skadd_oskadd)
 ```
 
 > 5f4) ger eina líknandi test við `prop.test()`, sum kannar null-hypotesuna um at `p_skadd` er eins fyri allar sýslur. Hvørja niðurstøðu kemur testin fram til? 
