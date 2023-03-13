@@ -491,10 +491,16 @@ t.test(ophapp_yvirlit$p_skadd, conf.level = .95)$conf.int
 
 ```
 
-> 5c) ger eina `prop.test()` við hóskandi data frá `ophapp_yvirlit` í 4f, sum kannar null-hypotesuna um `p_skadd` er eins fyri teir tveir bólkarnar av `stað`. Hvørja niðurstøðu kemur testin fram til? 
+> 5c) ger eina `prop.test()` við hóskandi data frá `ophapp_yvirlit` í 4f, sum kannar null-hypotesuna um `p_skadd` er eins fyri teir tveir bólkarnar av `stað`. Hvørja niðurstøðu kemur testin fram til?
+
+    "MANGLAR AT SVARA"
 
 ```{r}
+`stað_1` <- ophapp_yvirlit %>% filter(`stað` == "Á kommunalvegi")
+prop.test(x = 10, n = `stað_1`$n, p = `stað_1`$p_skadd)
 
+`stað_2` <- ophapp_yvirlit %>% filter(`stað` == "Á landsvegi")
+prop.test(x = 10, n = `stað_2`$n, p = `stað_2`$p_skadd)
 ```
 
 > 5d) ger eina pipe av `ferdslu_ohapp` har tú bert tekur ár `1998` og stað `Á landsvegi` við, síðani bólkar uppá `stað, ár, sýsla` (so hesi lesast út), roknar tal av óhappum `n_ohapp` og tal av skaddum `n_skadd`. Goym úrslitið í `landsvegi_ar` og les hana út (tip: tú fært eina `6 x 5` tibble).
