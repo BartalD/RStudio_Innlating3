@@ -561,11 +561,7 @@ t.test(ophapp_yvirlit$p_skadd, conf.level = .95)$conf.int
     "MANGLAR AT SVARA"
 
 ```{r}
-`stað_1` <- ophapp_yvirlit %>% filter(`stað` == "Á kommunalvegi")
-prop.test(x = 10, n = `stað_1`$n, p = `stað_1`$p_skadd)
-
-`stað_2` <- ophapp_yvirlit %>% filter(`stað` == "Á landsvegi")
-prop.test(x = 10, n = `stað_2`$n, p = `stað_2`$p_skadd)
+prop.test(x = ophapp_yvirlit$n_skadd, n = ophapp_yvirlit$n_ohapp, p = ophapp_yvirlit$p_skadd)
 ```
 
 > 5d) ger eina pipe av `ferdslu_ohapp` har tú bert tekur ár `1998` og stað `Á landsvegi` við, síðani bólkar uppá `stað, ár, sýsla` (so hesi lesast út), roknar tal av óhappum `n_ohapp` og tal av skaddum `n_skadd`. Goym úrslitið í `landsvegi_ar` og les hana út (tip: tú fært eina `6 x 5` tibble).
@@ -612,13 +608,13 @@ for (n in n_ohapp) {
 }
 
 ggplot(ndata, aes(x,y)) +
-  geom_area(data=filter(ndata,
-                        x <= 10),
-            fill = "lightblue") +
-  geom_area(data=filter(ndata,
-                        x >= 20),
-            aes(x = x, y = y),
-            fill = "lightblue") +
+  # geom_area(data=filter(ndata,
+  #                       x <= 10),
+  #           fill = "lightblue") +
+  # geom_area(data=filter(ndata,
+  #                       x >= 20),
+  #           aes(x = x, y = y),
+  #           fill = "lightblue") +
   scale_x_continuous(breaks = seq(0, 25, 5)) +
   scale_y_continuous(breaks = seq(0, 0.4, 0.1)) +
   geom_line() +
@@ -647,7 +643,7 @@ sysla_yvirlit
 ```{r}
 skadd_oskadd <- sysla_yvirlit %>%
   group_by(n_skadd, n_oskadd) %>%
-  summarise()
+  select(n_skadd, n_oskadd)
 
 skadd_oskadd
 ```
@@ -663,7 +659,13 @@ chisq.test(skadd_oskadd)
 > 5f4) ger eina líknandi test við `prop.test()`, sum kannar null-hypotesuna um at `p_skadd` er eins fyri allar sýslur. Hvørja niðurstøðu kemur testin fram til? 
 
 ```{r}
+ptest <- skadd_oskadd$n_skadd / (skadd_oskadd$n_skadd + skadd_oskadd$n_oskadd)
+ptest
 
+# prop.test(x = skadd_oskadd$n_skadd, n = skadd_oskadd$n_oskadd, p = ptest)
+prop.test(x = skadd_oskadd)
+
+?prop.test
 ```
 
 
