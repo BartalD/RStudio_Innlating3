@@ -67,15 +67,14 @@ sama_fdag
 ```{r}
 sama_fdag <- mutate(
   sama_fdag,
-  fdag = map(n_lesandi, ~ sample(365, ., replace = TRUE))
-  )
+  fdag = map(n_lesandi, ~ sample(365, ., replace = TRUE)))
+
 sama_fdag
 ```
 
 > 1c)  hvør datatypa er variabul `fdag`? í tibble `sama_fdag`? Útles variabul `fdag` soleiðis, at bæði datatypa og innihald sæst.
 
 ```{r}
-# Ein listi av integers
 str(sama_fdag$fdag)
 ```
 
@@ -84,8 +83,6 @@ str(sama_fdag$fdag)
 > 1d) legg variabul `nakar_sdag` afturat `sama_fdag` við brúk av `mutate()`, og eini eini logiskari `map()`-funktión. Soleiðis, at tú fyri hvønn simuleraðan `fdag` eftirkannar (`TRUE` ella `FALSE`) um nøkur lesandi hava sama føðingardag. Útles síðani tibble `sama_fdag` umaftur (tip: hon skal vera ein `18 x 4` tibble).
 
 ```{r}
-
-
 sama_fdag <- mutate(sama_fdag, nakar_sdag = map_lgl(fdag, ~ any(duplicated(.x))))
 sama_fdag
 
@@ -111,7 +108,7 @@ p_samadag
 p_samadag <-
   crossing(n_lesandi = 2:10, roynd_nr = 1:2) %>%
   mutate(.,
-  fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
+    fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
   ) %>%
   mutate(., nakar_sdag = map_lgl(fdag, ~any(duplicated(.x)))) %>%
   group_by(n_lesandi) %>%
@@ -131,7 +128,7 @@ n_lesandi <- 2:50
 p_samadag <-
   crossing(n_lesandi, roynd_nr) %>%
   mutate(.,
-  fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
+    fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
   ) %>%
   mutate(., nakar_sdag = map_lgl(fdag, ~any(duplicated(.x)))) %>%
   group_by(n_lesandi) %>%
@@ -149,7 +146,7 @@ roynd_nr <- 1:5000
 p_samadag <-
   crossing(n_lesandi, roynd_nr) %>%
   mutate(.,
-  fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
+    fdag = map(n_lesandi, ~sample(365, ., replace = TRUE))
   ) %>%
   mutate(., nakar_sdag = map_lgl(fdag, ~any(duplicated(.x)))) %>%
   group_by(n_lesandi) %>%
@@ -341,13 +338,26 @@ ggplot(p_maxsdag, aes(x = n_lesandi, y = p_sdag, colour = max)) +
     Við avlesing av grafinum, sæst greitt at tá x = 100, eru sannlíkjindini fyri == 3 størst, == 2 næst størst og so er tað == 4.
     Við avlesing av grafinum, sæst greitt at tá x = 200, eru sannlíkjindini fyri == 4 størst, == 3 næst størst og so er tað == 5.
     Við avlesing av grafinum, sæst greitt at tá x = 300, eru sannlíkjindini fyri == 4 størst, == 5 næst størst og so er tað == 3.
-    Við avlesing av grafinum, sæst greitt at tá x = 400, eru sannlíkjindini fyri == 5 størst, == 4 næst størst, aftaná hetta ber ikki til at siga hvat kemur bert við at avlesa grafin.
+    Við avlesing av grafinum, sæst greitt at tá x = 400, eru sannlíkjindini fyri == 5 størst, == 4 næst størst, aftaná hetta ber ikki til at siga hvat kemur bert við at avlesa grafin. Allarhelst eru øll tætt við ella eru null.
     
 
 > 2f4) um tú hyggur eftir virðunum `50, 100, 200, 300, 400` fyri antal lesandi, hvørji sannlíkindi `p_sdag` fyri `max == 2, 3, 4, 5` eru ávikavist hægst, næst- og trið-hægst í hvørjum føri? (tip: ger ein pipe-setning av `p_maxsdag`, sum einans vísir rekkjur fyri `n_lesandi` í `50, 100, 200, 300, 400` sorteraðar eftir vaksandi `n_lesandi` og fallandi `p_sdag`. Legg síðani ein variabul `nr` afturat tíni tibble við brúk av `row_number()`, sum tú filtrerar at vera `nr <= 3`. Úrslitið skal hava `15` rekkjur og `4` variablar: `n_lesandi, max, p_sdag,  nr`, har `nr` inniheldur virðini `1, 2, 3`).
 
 ```{r}
+max_values <- NULL
+for (v in c(50, 100, 200, 300, 400)) {
+  n_lesandi_max <- NULL
+  n_lesandi_max <-
+    head(
+      arrange(p_maxsdag %>%
+        filter(n_lesandi == v) %>% filter(max != ">= 2"), desc(p_sdag)
+      ),
+    3) %>%
+    mutate(nr = c(1, 2, 3))
+  max_values <- rbind(max_values, n_lesandi_max)
+}
 
+max_values
 ```
 
 
