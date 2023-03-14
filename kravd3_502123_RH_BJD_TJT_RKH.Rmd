@@ -1,6 +1,7 @@
 ---
 title: "Kravd innlating 3"
-author: "Skriva fult navn/nøvn á lesandi her."
+author: "Rasmus Hansen, Bartal Jógvansson Djurhuus, Torkil Janusarson Thomsen, Rúni
+  Klein Hansen"
 date: "Innlating í Moodle: seinast um kvøldið 14. mars 2023. Endurbrúka eisini fílnavnið
   á hesum template-skjalinum, sum tit lata inn, har tit seta tykkara forbókstavir
   inn fyri NN1_NN2_NN3_NN4."
@@ -137,6 +138,7 @@ p_samadag <-
 p_samadag
 
 ```
+    
     Her sær man eina korrelation ímillum n_lesandi og sannlíkindi at tvey ella fleiri hava sama føðingardag. Størri n_lesandi, størri er kjansurin at tvey fylla sama dag.
 
 > 1f3) her skal talið `n_lesandi` framvegis vera `2:50`, og set nú talið `roynd_nr` upp til `1:5000`. Eftirkanna aftur, um tú enn fært sama/líknandi úrslit sum í 1e fyri fyrstu 9 rekkjurnar, og hvat tú nú fært í hinum rekkjunum? Greið frá hvat tú eygleiðir (tip: her skalt tú framvegis fáa eina `49 x 2` tibble).
@@ -154,6 +156,7 @@ p_samadag <-
   
 p_samadag
 ```
+    
     Hetta líkjist sum so ikki hitt dataði, tí her eru ikki bert 0, 0.5 ella 1. Hetta kemst av hægri sampling, also er hetta ikki í mótstríð við hitt. Um ein hyggur víðari at datanum, so vil ein eisini síggja at bæði eru hækkandi.
 
 > 1f4) plotta eitt punkt- og linjuplot av `p_samadag` frá spurningi 1f3, har tú mappar `x = n_lesandi` og `y = p_sdag`. Brúka til dømis tilhoyrandi aksa-tekstirnar: "Antal lesandi" og "Sannlíkindini fyri sama føðingardag". Hvussu stóran flokk av lesandi skalt tú hava fyri at sannlíkindini fyri at nakar í flokkinum hevur sama føðingardag er ávikavist 0.5, 0.7 og 0.9?
@@ -344,6 +347,7 @@ ggplot(p_maxsdag, aes(x = n_lesandi, y = p_sdag, colour = max)) +
 
 > 2f3) um tú hyggur eftir virðunum `50, 100, 200, 300, 400` fyri antal lesandi, hvørji sannlíkindi `p_sdag` fyri `max == 2, 3, 4, 5` eru ávikavist hægst, næst- og trið-hægst í hvørjum føri? (tip: avles plottið í 2f2).
 
+    
     Við avlesing av grafinum, sæst greitt at tá x = 50, eru sannlíkjindini fyri == 2 størst, == 3 næst størst og so er tað == 4.
     Við avlesing av grafinum, sæst greitt at tá x = 100, eru sannlíkjindini fyri == 3 størst, == 2 næst størst og so er tað == 4.
     Við avlesing av grafinum, sæst greitt at tá x = 200, eru sannlíkjindini fyri == 4 størst, == 3 næst størst og so er tað == 5.
@@ -466,7 +470,7 @@ ggplot(data = ferdslu_ohapp) +
 > 3f) ger eitt `geom_bar()` plot av `ferdslu_ohapp` við `ár` sum x-aksa, `Ferðsluóhapp tilsamans` sum y-aksa, har tú brúkar `alpha = 0.25`. Hetta vísir samlaða talið av óhappum fyri hvørt árið. Í sama plotti, ger eitt `geom_point()` plot av `ferdslu_ohapp` við `ár` sum x-aksa, `Ferðsluóhapp tilsamans` sum y-aksa, har tú mappar lit av punktum til variabul `stað` og brúkar `sýsla` sum facet-variabul við `scales = "free_y"`. Greið frá hvat tit leggja merki til í hesum plotti. 
 
 
-```{r}
+```{r, warning = FALSE}
 
 ggplot(ferdslu_ohapp) +
   geom_bar(aes(x = ár, y = `Ferðsluóhapp tilsamans`), alpha = 0.25, stat = "Identity", na.rm = TRUE) +
@@ -528,7 +532,9 @@ ggplot(ferdslu_ohapp) +
   geom_violin(aes(x = `Skadd fólk` / `Ferðsluóhapp tilsamans`, y = "Í Føroyum"), alpha = 0.25, na.rm = TRUE)
 ```
 
-    Mangalalalla!!!!
+    Vit síggja at nøkur ár hála hálsin á violinini langt upp tá ið tosað verður um fólkaskaða á landsvegi. Hetta sæst eisini í "Í Føroyum", har vit síggja at tann hálsurin verður ávirkaður av langa hálsinum. Vit síggja tó eisini at 'feiti' kroppurin frá fólkaskaðum á kommunalvegi ávirkar samlaða settið í "Í Føroyum".
+    Men vit síggja eisini at violinplottið gevur okkum eitt meira informativt sjóneyka á  datasettið. Serliga í "Á kommunalvegi" síggja vit at plottið hevur tveir lokalar tindar (peaks), sum vit ikki síggja í boxplottinum. T.d. síggja vit at boxplottini fyri "Í Føroyum" og "Á landsvegi" líkjast í skapi, ímeðan violinir teirra ikki líkjast í skapi.
+    Tó skal sigast at boxplotti er nógv greiðari í lesingini av kvartilum. Men vit vita eisini frá undanfarnu innlatingum, at tað ber til at leggja kvartilar í violinir eisini. 
 
 > 4f) ger eina pipe av `ferdslu_ohapp` har tú ikki tekur árið `2009` við, síðani bólkar uppá `stað`, telur antal datapunkt `n` og roknar tal av óhappum `n_ohapp`, tal av skaddum `n_skadd` og roknar sannlíkindini `p_skadd` fyri fólkaskaða. Goym úrslitið í `ophapp_yvirlit` og les hana út (tip: tú fært eina `2 x 5` tibble).
 
@@ -561,14 +567,16 @@ t.test(ophapp_yvirlit$p_skadd, conf.level = .95)$conf.int
 ```{r}
 binom.test(x = 636, n = 12623, p = 1/103)
 ```
-    Mangla at svara
-> 5c) ger eina `prop.test()` við hóskandi data frá `ophapp_yvirlit` í 4f, sum kannar null-hypotesuna um `p_skadd` er eins fyri teir tveir bólkarnar av `stað`. Hvørja niðurstøðu kemur testin fram til?
 
-    "MANGLAR AT SVARA"
+    P-value er næstan 0, so vit kunnu siga at sannlíkindini ikki eru tilsvarandi.
+     
+> 5c) ger eina `prop.test()` við hóskandi data frá `ophapp_yvirlit` í 4f, sum kannar null-hypotesuna um `p_skadd` er eins fyri teir tveir bólkarnar av `stað`. Hvørja niðurstøðu kemur testin fram til?
 
 ```{r}
 prop.test(x = ophapp_yvirlit$n_skadd, n = ophapp_yvirlit$n_ohapp, p = ophapp_yvirlit$p_skadd)
 ```
+
+    Her er p-value næstan 1. So her kunnu vit ikki avvísa null-hypotesuna. Av tí at p-value er hægri enn 0.05, í hesum førinum 0.9996, so kunnu vit siga at sannlíkindini eru høg fyri at tað er samanhangur.   
 
 > 5d) ger eina pipe av `ferdslu_ohapp` har tú bert tekur ár `1998` og stað `Á landsvegi` við, síðani bólkar uppá `stað, ár, sýsla` (so hesi lesast út), roknar tal av óhappum `n_ohapp` og tal av skaddum `n_skadd`. Goym úrslitið í `landsvegi_ar` og les hana út (tip: tú fært eina `6 x 5` tibble).
 
@@ -586,14 +594,12 @@ landsvegi_ar
 
 > 5e) antak at á landsvegi í Føroyum eru fólkaskaðatilburðir í hvørjari sýslu binomialfordeildir við somu sannlíkindum sum fyri alt landið (`p_skadd = 626/5285`), og plotta tær seks binomialfordeilingarnar svarandi til tey seks `n_ohapp` virðini í `landsvegi_ar`. Greið frá hvat tú leggur merki til í hesum sannlíkinda-plottum (tip: brúka  til dømis ein for-loop og eitt facet-plot, eins og vit áður hava gjørt í undirvísingini, og lat `x = seq(0, 25, 1)`).
 
-  "MANGLAR AT SVARA"
-
 ```{r}
 n_ohapp <- landsvegi_ar$n_ohapp
 p <- 626/5285 # p_skadd
-
 ndata <- NULL
 tdata <- NULL
+
 for (n in n_ohapp) {
   size = n
   mu <- n*p
@@ -604,6 +610,8 @@ for (n in n_ohapp) {
                     y = dnorm(x, mu, sd),
                     n_ohapp = n)
   ndata <- rbind(ndata, tb_data)
+  
+  tb_bino <- NULL
   
   tb_bino <- tibble(
   x = seq(0, 25, 1),
@@ -622,11 +630,20 @@ ggplot(ndata, aes(x,y)) +
   #           aes(x = x, y = y),
   #           fill = "lightblue") +
   scale_x_continuous(breaks = seq(0, 25, 5)) +
-  scale_y_continuous(breaks = seq(0, 0.4, 0.1)) +
+  #scale_y_continuous(breaks = seq(0, 0.6, 0.1)) +
   geom_line() +
   geom_point(data=tdata, aes(x, y)) +
   facet_wrap(~ n_ohapp)
 ```
+
+    Vit síggja at tá ið talið av óhappum hækkar, líkjast plottini meira einari binomialfordeiling ella poissonfordeiling. Tað sær út sum at týttleikin av fólkaskaðum í ferðsluóhappum í Føroyum fylgir einari poisson-fordeiling.
+    
+    Ein variabul skal uppfylla fylgjandi krøv um hann skal fyglja einari poisson-fordeiling:
+     - Data er antal av hendingum
+     - Týttleikin (p) broytist ikki í mun til tíð og stað
+     
+    Okkara datasett fylgir hesum krøvum, og tí kunnu vit ikki avvísa at hetta er ein poisson-fordeiling.
+    
 
 > 5f) 
 
@@ -656,11 +673,11 @@ skadd_oskadd
 
 > 5f3) brúka `chisq.test()` at kanna null-hypotesuna um at sannlíkindini fyri fólkaskaða í ferðsluóhappum í Føroyum eru óheftir av `sýslu`. Hvørja niðurstøðu kemur testin fram til?
 
-    "MANGLAR AT SVARA"
-
 ```{r}
 chisq.test(skadd_oskadd)
 ```
+
+    P-value er næstan 0, so vit kunnu avvísa null-hypotesuna.
 
 > 5f4) ger eina líknandi test við `prop.test()`, sum kannar null-hypotesuna um at `p_skadd` er eins fyri allar sýslur. Hvørja niðurstøðu kemur testin fram til? 
 
@@ -668,4 +685,4 @@ chisq.test(skadd_oskadd)
 prop.test(x = as.matrix(skadd_oskadd))
 ```
 
-    Manglar
+    P-value er tað sama sum í 5f3, sum er næstan 0. Vit kunnu tí eisini í hesum førið avvísa null-hypotesuna. 
