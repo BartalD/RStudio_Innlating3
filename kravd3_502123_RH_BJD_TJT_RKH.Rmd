@@ -293,7 +293,9 @@ p_maxsdag
 > 2e4) plotta eitt punkt- og linjuplot av `p_maxsdag` frá spurningi 2e3, har tú mappar `x = n_lesandi` og `y = p_sdag`, og har tú hesuferð mappar lit til `max` so tú fært ein legend. 
 
 ```{r}
-
+ggplot(p_maxsdag, aes(x = n_lesandi, y = p_sdag, colour = max)) +
+  geom_point() +
+  geom_line()
 ```
 
 > 2f) vit dagføra nú simuleringina.
