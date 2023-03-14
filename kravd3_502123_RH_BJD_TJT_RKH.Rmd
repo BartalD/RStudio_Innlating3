@@ -164,7 +164,10 @@ ggplot(p_samadag, aes(x = n_lesandi, y = p_sdag)) +
   geom_line() +
   xlab("Antal lesandi") +
   ylab("Sannlíkindi fyri sama føðingardag") +
-  geom_hline(yintercept = c(0.5, 0.7, 0.9), linetype = "dashed")
+  geom_hline(yintercept = c(0.5, 0.7, 0.9), linetype = "dashed") +
+  annotate("text", x=18, y = 0.53, label="k = 23: ~50.7%") +
+  annotate("text", x=25, y = 0.73, label="k = 30: 70.6%") +
+  annotate("text", x=35, y = 0.93, label="k = 41: 90.3%")
 ```
     
     Um ein bert hyggur eftir plottinum, so skal tað vera ~23 fyri 50%, ~30 fyri 70% og ~41 fyri 90%.
@@ -206,11 +209,18 @@ p_samadag
 > 2c) plotta eitt punkt-plot av `p_samadag` frá spurningi 2b, har tú mappar `x = n_lesandi` og `y = p_sdag`, og har tú hesuferð plottar eina linju fyri tey teoretisku sannlíkindini `p_bday`. Útfrá teoretisku sannlíkindunum í `p_bday`, hvussu stóran flokk av lesandi skalt tú hava fyri at sannlíkindini fyri at nakar í flokkinum hevur sama føðingardag er ávikavist 0.5, 0.7 og 0.9? (tip: avles talvuna, kurvuna og/ella brúka `qbirthday()`-funktiónina). 
 
 ```{r}
+x50 <- qbirthday(prob = 0.5, classes = 365, coincident = 2)
+x70 <- qbirthday(prob = 0.7, classes = 365, coincident = 2)
+x90 <- qbirthday(prob = 0.9, classes = 365, coincident = 2)
+
 ggplot(p_samadag, aes(x = n_lesandi, y = p_sdag)) +
   geom_point() +
-  geom_vline(xintercept = qbirthday(prob = 0.5, classes = 365, coincident = 2), linetype = "dashed") +
-  geom_vline(xintercept = qbirthday(prob = 0.7, classes = 365, coincident = 2), linetype = "dashed") +
-  geom_vline(xintercept = qbirthday(prob = 0.9, classes = 365, coincident = 2), linetype = "dashed") +
+  geom_vline(xintercept = x50, linetype = "dashed") +
+  annotate("text", x=x50-1, y = 0.25, label=sprintf("%s: %s lesandi", "50%", x50), angle=90) +
+  geom_vline(xintercept = x70, linetype = "dashed") +
+  annotate("text", x=x70-1, y = 0.25, label=sprintf("%s: %s lesandi", "70%", x70), angle=90) +
+  geom_vline(xintercept = x90, linetype = "dashed") +
+  annotate("text", x=x90-1, y = 0.25, label=sprintf("%s: %s lesandi", "90%", x90), angle=90) +
   xlab("Antal lesandi") +
   ylab("Sannlíkindi fyri sama føðingardag")
 
