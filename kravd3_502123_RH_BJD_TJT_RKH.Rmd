@@ -665,11 +665,7 @@ chisq.test(skadd_oskadd)
 > 5f4) ger eina líknandi test við `prop.test()`, sum kannar null-hypotesuna um at `p_skadd` er eins fyri allar sýslur. Hvørja niðurstøðu kemur testin fram til? 
 
 ```{r}
-
-# prop.test(x = skadd_oskadd$n_skadd, n = skadd_oskadd$n_oskadd, p = ptest)
 prop.test(x = as.matrix(skadd_oskadd))
-
-?prop.test
 ```
 
 
