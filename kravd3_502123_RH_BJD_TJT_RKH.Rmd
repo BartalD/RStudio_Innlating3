@@ -461,6 +461,8 @@ ggplot(data = ferdslu_ohapp) +
 
 ```
 
+    Tá ið Streymoyggin og Norðoyggin eru skildar sundur frá mongdini, síggja vit betri hvussu myndin sær út í teimum støðum. Okkara hypotesa er, at teir tveir 'Stórbýinir', Tórshavn og Klaksvík eiga eina størri mongd av óhappum á Kommunalvegum enn restina av landinum. Hetta síggja vit eisini á grafinum, har lutfallið ímillum óhapp á kommunalvegi og landsvegið er skeikla á Norðoyggjum og Streymoynni. Vit síggja eisini at munurin ímillum Kommunalveg og landsveg verður týðiligari á hinum økjunum eisini. Hetta meta vit kemur av tí at man tekur 'outliers' uppí grafin á hendan hátt. Á fyrra grafinum verða 'outliers' ikki tiknir við í sjálva boksina, og tí síggja vit ikki eina greiða mynd av tí. Av tí sama verður Streymoyar sýsla nærum ignorerað í fyrra grafinum.
+
 > 3f) ger eitt `geom_bar()` plot av `ferdslu_ohapp` við `ár` sum x-aksa, `Ferðsluóhapp tilsamans` sum y-aksa, har tú brúkar `alpha = 0.25`. Hetta vísir samlaða talið av óhappum fyri hvørt árið. Í sama plotti, ger eitt `geom_point()` plot av `ferdslu_ohapp` við `ár` sum x-aksa, `Ferðsluóhapp tilsamans` sum y-aksa, har tú mappar lit av punktum til variabul `stað` og brúkar `sýsla` sum facet-variabul við `scales = "free_y"`. Greið frá hvat tit leggja merki til í hesum plotti. 
 
 
@@ -473,6 +475,9 @@ ggplot(ferdslu_ohapp) +
   theme(axis.text.x = element_text(angle = 90))
 
 ```
+
+        Tað fyrsta vit síggja er at óhappini á kommunalvegi eru minkandi í øllum sýslum. Men av tí at datasetti frá Sandoynni og Vágoynni er so lítið, so velja vit at hyggja burtur frá tí. Vit síggja eisini at talið av óhappum á kommunalvegi og landsvegi førka seg í ein konvergerandi hátt. 
+
 
 
 ### Uppg. 4
@@ -504,7 +509,6 @@ ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk`)) +
 
 > 4d) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `stað` sum x-aksa, lutfallið `Skadd fólk`/`Ferðsluóhapp tilsamans` sum y-aksa og `sýsla` sum facet-variabul við `scales = "free_y"`. Greið frá hvat tit leggja merki til í hesum plotti.
 
-    "MANGLAR AT SVARA"
 
 ```{r}
 ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk` / `Ferðsluóhapp tilsamans`)) +
@@ -512,17 +516,19 @@ ggplot(ferdslu_ohapp, aes(x = `stað`, y = `Skadd fólk` / `Ferðsluóhapp tilsa
   facet_wrap(~ `sýsla`, scales = "free_y")
 ```
 
-> 4e) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `stað` sum y-aksa uttan at brúka nakran facet-variabul. Í sama plotti, legg eitt tilsvarandi `geom_violin()` plot, har tú brúkar `alpha = 0.25`. Í sama plotti, legg harumframt eitt eyka `geom_boxplot()` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `Í Føroyum` sum y-aksa, og eitt tilsvarandi `geom_violin()` plot, har tú aftur brúkar `alpha = 0.25`. Greið frá hvat tú leggur merki til í hesum plotti (tip: samanber tey trý box- og violinplottini).
+     Vit síggja at tað í størri mun eru landsvegirnir har flest fólk fáa skaða, undantikið Vága sýslu. Okkara hypotesa er at ferðin er hægri á landsvegnum, og tí síggja vit fleiri skaðar har. Vit vænta at Vága sýsla hevur fleiri fólk við skaða á kommunalvegi í mun til landsvegi, av tí at flestu veginir á Vágoynni eru kommunalir.
 
-    "MANGLAR AT SVARA"
+> 4e) plotta eitt `geom_boxplot()` av `ferdslu_ohapp` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `stað` sum y-aksa uttan at brúka nakran facet-variabul. Í sama plotti, legg eitt tilsvarandi `geom_violin()` plot, har tú brúkar `alpha = 0.25`. Í sama plotti, legg harumframt eitt eyka `geom_boxplot()` við `Skadd fólk`/`Ferðsluóhapp tilsamans` sum x-aksa, `Í Føroyum` sum y-aksa, og eitt tilsvarandi `geom_violin()` plot, har tú aftur brúkar `alpha = 0.25`. Greið frá hvat tú leggur merki til í hesum plotti (tip: samanber tey trý box- og violinplottini).
 
 ```{r}
 ggplot(ferdslu_ohapp) +
   geom_boxplot(aes(x = `Skadd fólk`/`Ferðsluóhapp tilsamans`, y = `stað`), color = "red", na.rm = TRUE) +
   geom_violin(aes(x = `Skadd fólk`/`Ferðsluóhapp tilsamans`, y = `stað`), alpha = 0.25, na.rm = TRUE) +
-  geom_boxplot(aes(x = `Skadd fólk` / `Ferðsluóhapp tilsamans`, y = `sýsla`), color = "blue", na.rm = TRUE) +
-  geom_violin(aes(x = `Skadd fólk` / `Ferðsluóhapp tilsamans`, y = `sýsla`), alpha = 0.25, na.rm = TRUE)
+  geom_boxplot(aes(x = `Skadd fólk` / `Ferðsluóhapp tilsamans`, y = "Í Føroyum"), color = "blue", na.rm = TRUE) +
+  geom_violin(aes(x = `Skadd fólk` / `Ferðsluóhapp tilsamans`, y = "Í Føroyum"), alpha = 0.25, na.rm = TRUE)
 ```
+
+    
 
 > 4f) ger eina pipe av `ferdslu_ohapp` har tú ikki tekur árið `2009` við, síðani bólkar uppá `stað`, telur antal datapunkt `n` og roknar tal av óhappum `n_ohapp`, tal av skaddum `n_skadd` og roknar sannlíkindini `p_skadd` fyri fólkaskaða. Goym úrslitið í `ophapp_yvirlit` og les hana út (tip: tú fært eina `2 x 5` tibble).
 
