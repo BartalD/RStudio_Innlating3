@@ -311,7 +311,6 @@ ggplot(p_maxsdag, aes(x = n_lesandi, y = p_sdag, colour = max)) +
 
 ```{r}
 n_lesandi = c(2, seq(10, 700, 10))
-#n_lesandi = seq(5, 700, 5)
 roynd_nr = 1:2000
 
 p_maxsdag <- NULL
@@ -408,9 +407,6 @@ ferdslu_ohapp <- pivot_longer(ferdslu_ohapp, cols = '1995':'2012',
                    names_to = "ár", values_to = "n", values_transform = list(n = as.integer))
 
 ferdslu_ohapp
-
-#ferdslu_ohapp$n <- as.integer(ferdslu_ohapp$n)
-
 ```
 
 > 3c3) deil variabul `slag` í tveir nýggjar variablar við heitum frá `slag` og virðum frá `n`, og útles `ferdslu_ohapp` umaftur (tip: tú fært eina `216 x 5` tibble).
@@ -621,15 +617,7 @@ for (n in n_ohapp) {
 }
 
 ggplot(ndata, aes(x,y)) +
-  # geom_area(data=filter(ndata,
-  #                       x <= 10),
-  #           fill = "lightblue") +
-  # geom_area(data=filter(ndata,
-  #                       x >= 20),
-  #           aes(x = x, y = y),
-  #           fill = "lightblue") +
   scale_x_continuous(breaks = seq(0, 25, 5)) +
-  #scale_y_continuous(breaks = seq(0, 0.6, 0.1)) +
   geom_line() +
   geom_point(data=tdata, aes(x, y)) +
   facet_wrap(~ n_ohapp)
