@@ -1,7 +1,6 @@
 ---
 title: "Kravd innlating 3"
-author: "Rasmus Hansen, Bartal Jógvansson Djurhuus, Torkil Janusarson Thomsen, Rúni
-  Klein Hansen"
+author: "Rasmus Hansen, Bartal Jógvansson Djurhuus, Torkil Janusarson Thomsen, Rúni Klein Hansen"
 date: "Innlating í Moodle: seinast um kvøldið 14. mars 2023. Endurbrúka eisini fílnavnið
   á hesum template-skjalinum, sum tit lata inn, har tit seta tykkara forbókstavir
   inn fyri NN1_NN2_NN3_NN4."
